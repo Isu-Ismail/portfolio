@@ -83,8 +83,8 @@ export const data = {
     },
     {
       title: "Attender App",
-      description: "Engineered a cross-platform attendance tracking app. Optimized performance by 20% by refactoring widget trees and implemented SQLite for offline storage.",
-      tags: ["Flutter", "SQLite", "Utility"],
+      description: "Mobile application to streamline attendance tracking for academic environments with a local database(hive) combined with the Google Drive API to ensure offline functionality as well as a cloud dashboard",
+      tags: ["Flutter", "Hive", "Utility", "Google Drive API"],
       link: "https://github.com/Isu-Ismail/ATTENDER_APP"
     },
     {

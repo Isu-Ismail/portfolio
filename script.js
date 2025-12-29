@@ -68,7 +68,7 @@ const renderAbout = () => {
                 
                 <div class="stats">
                     <div class="stat-card">
-                        <span class="stat-number">2+</span>
+                        <span class="stat-number">Waiting to gain some + </span>
                         <span class="stat-label">Years Experience</span>
                     </div>
                     <div class="stat-card">
