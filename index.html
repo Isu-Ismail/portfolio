@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.M. Ismail - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="container nav-content">
+            <a href="#" class="logo">
+                Ismail<span style="color: var(--primary);">.</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#certificates" class="nav-link">Certificates</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#" class="nav-link resume-link" target="_blank">Resume</a>
+
+                <button id="term-toggle" class="theme-toggle" aria-label="Open Terminal" title="Terminal Mode"
+                    style="margin-right: 0.5rem;">
+                    <i data-lucide="terminal-square"></i>
+                </button>
+
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+                    <i data-lucide="moon" class="theme-icon"></i>
+                </button>
+            </div>
+
+            <button id="mobile-menu-btn" class="mobile-menu-btn">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="mobile-menu">
+        <button id="mobile-close" class="mobile-close">
+            <i data-lucide="x"></i>
+        </button>
+        <a href="#about" class="nav-link mobile-link">About</a>
+        <a href="#projects" class="nav-link mobile-link">Projects</a>
+        <a href="#certificates" class="nav-link mobile-link">Certificates</a>
+        <a href="#skills" class="nav-link mobile-link">Skills</a>
+        <a href="#contact" class="nav-link mobile-link">Contact</a>
+        <a href="#" class="nav-link mobile-link resume-link" target="_blank">Resume</a>
+        <button id="theme-toggle-mobile" class="theme-toggle">
+            <i data-lucide="moon" class="theme-icon"></i>
+        </button>
+    </div>
+
+    <main>
+        <section id="hero" class="section"></section>
+        <section id="about" class="section"></section>
+        <section id="education" class="section"></section>
+        <section id="projects" class="section"></section>
+        <section id="certificates" class="section" style="background-color: rgba(var(--primary), 0.05);"></section>
+        <section id="skills" class="section"></section>
+        <section id="contact" class="section"></section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="footer-year"></span> <span id="footer-name"></span>. All rights reserved.</p>
+            <p style="margin-top: 0.5rem;">Built with HTML, CSS, and JS.</p>
+        </div>
+    </footer>
+
+    <div id="terminal-overlay" class="hidden">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="buttons">
+                    <span class="close-btn" id="close-terminal"></span>
+                    <span class="min-btn"></span>
+                    <span class="max-btn"></span>
+                </div>
+                <div class="terminal-title">ismail@mit-server:~</div>
+            </div>
+
+            <div class="terminal-body" id="terminalOutput">
+                <div class="output-line">
+                    <span class="prompt">➜</span>
+                    <span class="cmd">./init_portfolio.sh</span>
+                </div>
+                <div class="response">
+                    Welcome to Terminal Mode v2.0<br>
+                    Type <span class="highlight">'help'</span> to see available commands.<br>
+                    Type <span class="highlight">'exit'</span> to close.
+                </div>
+            </div>
+
+            <div class="input-line">
+                <span class="prompt">➜</span>
+                <input type="text" id="commandInput" autocomplete="off" spellcheck="false" autofocus>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>
