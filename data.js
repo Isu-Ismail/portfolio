@@ -5,7 +5,7 @@ export const data = {
   // REPLACE THESE LINKS WITH YOUR ACTUAL IMAGE PATHS (e.g., './assets/me.jpg')
   images: {
     profile: "./assets/me.jpeg", 
-    hero: "./assets/logo5.svg"
+    hero: "./assets/hero.jpeg"
   },
   contact: {
     email: "ismailsims1@gmail.com",
