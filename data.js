@@ -1,6 +1,6 @@
 export const data = {
   name: "A.M. Ismail",
-  role: "Full-Stack Developer & Engineer",
+  role: "System Architect & Developer",
   resume: "./assets/ismail_resume.pdf",
   // REPLACE THESE LINKS WITH YOUR ACTUAL IMAGE PATHS (e.g., './assets/me.jpg')
   images: {
@@ -14,7 +14,7 @@ export const data = {
     github: "https://github.com/Isu-Ismail",
     linkedin: "https://www.linkedin.com/in/yourprofile" 
   },
-  about: "I am a Production Engineering student at MIT with a deep passion for software architecture. I bridge the gap between mechanical systems and digital solutions. From building distributed cloud clusters to designing go-kart chassis, I thrive on solving complex problems. My motto is 'to learn and to grow'.",
+  about: "Production Engineering student focused on System Architecture and Rapid Prototyping. I specialize in designing distributed systems and utilize AI-augmented workflows to execute complex implementations efficiently. Tech-agnostic problem solver capable of deploying robust solutions across multiple environments.",
   education: [
     {
       degree: "B.E. Production Engineering",
@@ -30,8 +30,9 @@ export const data = {
     }
   ],
   skills: [
-    "Python", "Flutter", "React", "Docker", "NextJS", "Linux (Arch)", "C++", "SolidWorks", "Creo", "Nginx"
+    "System Architecture", "Git", "Github(pages,actions)","CI/CD", "AI-Augmented Dev", "Docker", "Nginx", "Linux", "Python", "Flutter",  "Rapid Prototyping",  "System Integration",
   ],
+  interests: ["3D Printing", "Home Server Administration", "Karting", "Tech Exploration"],
   certificates: [
     {
       title: "RUSA 2.0 AI in Smart BMS",
@@ -75,8 +76,8 @@ export const data = {
       link: "https://github.com/Isu-Ismail/virtual_lab"
     },
     {
-       title: "Industrial Automation",
-       description: "Automated a chemical treatment plant for SRI Energy. Developed a prototype model for crude oil extraction valves and control systems.",
+       title: "Chemical Treatment Plant Automation project(SRI enegry)",
+       description: "Automated a chemical treatment plant for SRI Energy. Developed a prototype model using Arduino and sensors to monitor and control the crane movement",
        tags: ["Automation", "Hardware", "Prototype"],
        link: "#"
     },
