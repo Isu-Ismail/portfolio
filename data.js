@@ -2,6 +2,11 @@ export const data = {
   name: "A.M. Ismail",
   role: "System Architect & Developer",
   resume: "./assets/resume_ismail.pdf",
+  gamePath: [
+      { "Dino": "./games/dino/dino.html" },
+      { "Pacman": "./games/pacman/pacman.html" },
+      { "Tetris": "./games/tetris/tetris.html" }
+    ],
   // REPLACE THESE LINKS WITH YOUR ACTUAL IMAGE PATHS (e.g., './assets/me.jpg')
   images: {
     profile: "./assets/me.jpeg", 

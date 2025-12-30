@@ -22,6 +22,27 @@ const updateResumeLinks = () => {
 // 1. UPDATED RENDER HERO (Circular Layout)
 const renderHero = () => {
     const hero = document.getElementById('hero');
+    
+    // 1. Get the Default Game (First one in list)
+    let defaultGameName = "";
+    let defaultGameUrl = "";
+    
+    if (Array.isArray(data.gamePath) && data.gamePath.length > 0) {
+        const firstGame = data.gamePath[0];
+        defaultGameName = Object.keys(firstGame)[0];
+        defaultGameUrl = Object.values(firstGame)[0];
+    }
+
+    // 2. Build the Dropdown Options
+    let optionsHTML = "";
+    if (Array.isArray(data.gamePath)) {
+        data.gamePath.forEach((gameObj, index) => {
+            const name = Object.keys(gameObj)[0];
+            const url = Object.values(gameObj)[0];
+            optionsHTML += `<option value="${url}">${name}</option>`;
+        });
+    }
+
     hero.innerHTML = `
         <div class="container hero-grid">
             <div class="hero-text fade-in-up">
@@ -49,223 +70,38 @@ const renderHero = () => {
             </div>
             
             <div class="hero-image fade-in game-wrapper">
-    <div class="game-window">
-        <div class="score-board">
-            <span style="opacity:0.7">HI:</span> <span id="highScoreVal">0</span>
-            &nbsp;|&nbsp; 
-            Score: <span id="scoreVal">0</span>
-        </div>
-        
-        <canvas id="runnerCanvas"></canvas>
-        <div id="gameOverlay">
-            <div class="overlay-content">
-                <i data-lucide="play" style="width: 40px; height: 40px; margin-bottom: 10px;"></i>
-                <p>Press SPACE to Run</p>
+                
+                <div class="game-selector">
+                    <i data-lucide="gamepad-2" style="width:14px;"></i>
+                    <select id="gameDropdown">
+                        ${optionsHTML}
+                    </select>
+                </div>
+
+                <iframe src="${defaultGameUrl}" id="gameFrame" class="game-frame" title="Interactive Game Module"></iframe>
             </div>
         </div>
-    </div>
-</div>
     `;
+
+    // 3. Add Event Listener for Switching Games
+    setTimeout(() => {
+        const dropdown = document.getElementById('gameDropdown');
+        const iframe = document.getElementById('gameFrame');
+        
+        if(dropdown && iframe) {
+            dropdown.addEventListener('change', (e) => {
+                iframe.src = e.target.value;
+                // Optional: Refocus the iframe so keyboard controls work immediately
+                iframe.focus();
+            });
+        }
+        
+        // Re-init icons for the new gamepad icon
+        if(window.lucide) window.lucide.createIcons();
+    }, 0);
 };
 
-// 2. UPDATED GAME LOGIC (Centered Road)
-const initDinoGame = () => {
-    const canvas = document.getElementById('runnerCanvas');
-    const overlay = document.getElementById('gameOverlay');
-    const scoreEl = document.getElementById('scoreVal');
-    const highScoreEl = document.getElementById('highScoreVal'); // NEW ELEMENT
-    
-    if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    canvas.width = 550;
-    canvas.height = 550;
-    const GROUND_Y = 350;
-    
-    // GAME VARIABLES
-    let gameRunning = false;
-    let score = 0;
-    let highScore = 0; // NEW VARIABLE
-    let animationId;
-    let baseSpeed = 5; 
-    let gameSpeed = baseSpeed;
-
-    const dino = {
-        x: 60,
-        y: GROUND_Y - 30,
-        width: 30,
-        height: 30,
-        dy: 0,
-        jumpPower: -9,
-        gravity: 0.3,
-        grounded: false
-    };
-
-    let obstacles = [];
-    let frame = 0;
-
-    const getColors = () => {
-        const style = getComputedStyle(document.body);
-        return {
-            primary: style.getPropertyValue('--primary').trim(),
-            text: style.getPropertyValue('--text').trim(),
-            bg: style.getPropertyValue('--bg').trim(),
-            muted: style.getPropertyValue('--muted').trim()
-        };
-    };
-
-    function spawnObstacle() {
-        const height = Math.random() * (50 - 25) + 25;
-        obstacles.push({
-            x: canvas.width,
-            y: GROUND_Y - height,
-            width: 20,
-            height: height, 
-            passed: false
-        });
-    }
-
-    function draw() {
-        const colors = getColors();
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Road
-        ctx.fillStyle = colors.text;
-        ctx.fillRect(0, GROUND_Y, canvas.width, 4); 
-        
-        // Ground
-        ctx.fillStyle = colors.muted; 
-        ctx.globalAlpha = 0.2; 
-        ctx.fillRect(0, GROUND_Y + 4, canvas.width, canvas.height - GROUND_Y);
-        ctx.globalAlpha = 1.0;
-
-        // Dino
-        ctx.fillStyle = colors.primary;
-        ctx.fillRect(dino.x, dino.y, dino.width, dino.height);
-        ctx.fillStyle = colors.bg;
-        ctx.fillRect(dino.x + 20, dino.y + 5, 4, 4);
-
-        // Obstacles
-        ctx.fillStyle = colors.text;
-        obstacles.forEach(obs => {
-            ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
-        });
-    }
-
-    function update() {
-        if (!gameRunning) return;
-
-        animationId = requestAnimationFrame(update);
-        frame++;
-
-        gameSpeed = Math.min(10, baseSpeed + (score * 0.01));
-
-        // Physics
-        dino.dy += dino.gravity;
-        dino.y += dino.dy;
-
-        if (dino.y + dino.height > GROUND_Y) {
-            dino.y = GROUND_Y - dino.height;
-            dino.dy = 0;
-            dino.grounded = true;
-        } else {
-            dino.grounded = false;
-        }
-
-        // Spawning
-        let spawnRate = Math.floor(100 - (gameSpeed * 2)); 
-        if (frame % spawnRate === 0) {
-            spawnObstacle();
-        }
-
-        // Obstacles Loop
-        for (let i = 0; i < obstacles.length; i++) {
-            let obs = obstacles[i];
-            obs.x -= gameSpeed;
-
-            // Collision
-            if (
-                dino.x < obs.x + obs.width &&
-                dino.x + dino.width > obs.x &&
-                dino.y < obs.y + obs.height &&
-                dino.y + dino.height > obs.y
-            ) {
-                gameOver();
-            }
-
-            if (obs.x + obs.width < 0) {
-                obstacles.splice(i, 1);
-                score++;
-                scoreEl.textContent = score;
-                i--;
-            }
-        }
-        draw();
-    }
-
-    function jump() {
-        if (dino.grounded) {
-            dino.dy = dino.jumpPower;
-            dino.grounded = false;
-        }
-    }
-
-    function startGame() {
-        if (gameRunning) return;
-        gameRunning = true;
-        score = 0;
-        gameSpeed = baseSpeed;
-        scoreEl.textContent = 0;
-        obstacles = [];
-        dino.y = GROUND_Y - 30;
-        frame = 0;
-        overlay.style.display = 'none';
-        update();
-    }
-
-    function gameOver() {
-        gameRunning = false;
-        cancelAnimationFrame(animationId);
-        
-        // --- NEW HIGH SCORE LOGIC ---
-        if (score > highScore) {
-            highScore = score;
-            highScoreEl.textContent = highScore;
-        }
-
-        overlay.style.display = 'flex';
-        overlay.innerHTML = `
-            <div class="overlay-content">
-                <h3 style="color:var(--primary); margin-bottom:10px;">System Crashed!</h3>
-                <p style="font-size:1.5rem; font-weight:bold;">Score: ${score}</p>
-                <p style="font-size:0.9rem; margin-top:5px; color:var(--text)">Best: ${highScore}</p>
-                <p style="font-size:0.8rem; margin-top:15px; color:var(--muted)">Tap or Space to Reboot</p>
-            </div>
-        `;
-    }
-
-    window.addEventListener('keydown', (e) => {
-        if (e.code === 'Space') {
-            e.preventDefault();
-            if (!gameRunning) {
-                if(overlay.innerHTML.includes("Crashed")) startGame();
-                else startGame();
-            } else {
-                jump();
-            }
-        }
-    });
-
-    canvas.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        if (!gameRunning) startGame();
-        else jump();
-    });
-    
-    draw();
-};
-
-// ... Call initDinoGame() inside DOMContentLoaded ...
 
 const renderAbout = () => {
     const about = document.getElementById('about');
@@ -671,7 +507,6 @@ const initTerminal = () => {
 // Main Init
 document.addEventListener('DOMContentLoaded', () => {
     renderHero();
-    initDinoGame();
     renderAbout();
     renderEducation();
     renderProjects();

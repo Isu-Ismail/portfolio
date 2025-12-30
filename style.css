@@ -723,24 +723,87 @@ footer {
 
 /* Update in style.css */
 
+/* Add/Update in style.css */
+
 .game-wrapper {
-    width: 550px;  /* CHANGED from 400px */
-    height: 550px;/* Must match width */
-    margin: 0 auto; /* Center it */
-    border-radius: 50%; /* Make it round */
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-    /* No rotation needed for the circle look */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 8px solid var(--text); /* Thick border looks like a portal */
+    width: 550px;
+    height: 550px;
+    margin: 0 auto;
+    border-radius: 50%; /* Keeps it circular */
+    border: 8px solid var(--text);
     position: relative;
-    overflow: hidden; /* Clips the square canvas into a circle */
+    overflow: hidden; /* This crops the square iframe into a circle */
     background: var(--bg);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
 }
 
 .game-wrapper:hover {
-    transform: scale(1.05);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+    transform: scale(1.02);
     border-color: var(--primary);
+}
+
+/* New Class for the Module */
+.game-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    /* Optional: make it white if your game has a transparent bg */
+    background: #000; 
+}
+
+.game-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    /* Optional: make it white if your game has a transparent bg */
+    background: #000; 
+}
+.game-selector {
+    position: absolute;
+    top: -3px;
+    right:220px; /* Offset from right to look good in circle */
+    z-index: 20; /* Above the iframe */
+    
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 20px;
+    padding: 4px 10px;
+    
+    color: var(--text);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.game-selector:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* THE DROPDOWN ITSELF */
+#gameDropdown {
+    background: transparent;
+    border: none;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--text);
+    cursor: pointer;
+    outline: none;
+    appearance: none; /* Hides default arrow in some browsers */
+    padding-right: 10px;
+}
+
+#gameDropdown option {
+    background: var(--bg);
+    color: var(--text);
 }
 
 .game-window {
