@@ -1,8 +1,8 @@
 /* Reset & Base Styles */
-:root {
-    --primary: #2E8B57; /* Forest Green */
+/* :root {
+    --primary: #2E8B57; 
     --primary-foreground: #ffffff;
-    --bg: #F5F5F0; /* Light Grey/Bone */
+    --bg: #F5F5F0; 
     --text: #1A2F23;
     --secondary: #E8E8E3;
     --muted: #64748B;
@@ -21,7 +21,84 @@
     --muted: #94A3B8;
     --card-bg: rgba(0, 0, 0, 0.2);
     --border: #1E3A2F;
+} */
+
+/*deep ocean theme*/
+/* Option 1: Deep Ocean */
+:root {
+    --primary: #2563EB; 
+    --primary-foreground: #ffffff;
+    --bg: #F8FAFC; 
+    --text: #0F172A; 
+    --secondary: #E2E8F0; 
+    --muted: #64748B;
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --border: #CBD5E1;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Manrope', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 }
+
+[data-theme="dark"] {
+    --primary: #3B82F6;
+    --bg: #0F172A; 
+    --text: #F1F5F9;
+    --secondary: #1E293B; 
+    --muted: #94A3B8;
+    --card-bg: rgba(30, 41, 59, 0.4);
+    --border: #334155;
+}
+
+/* Option 2: Industrial Amber */
+/* :root {
+    --primary: #D97706;
+    --primary-foreground: #ffffff;
+    --bg: #FAFAF9; 
+    --text: #1C1917; 
+    --secondary: #E7E5E4; 
+    --muted: #78716C;
+    --card-bg: rgba(255, 255, 255, 0.6);
+    --border: #D6D3D1;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Manrope', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+[data-theme="dark"] {
+    --primary: #F59E0B; 
+    --bg: #1C1917; 
+    --text: #E7E5E4;
+    --secondary: #292524; 
+    --muted: #A8A29E;
+    --card-bg: rgba(41, 37, 36, 0.5);
+    --border: #44403C;
+} */
+
+/* Option 3: Obsidian Mono */
+/* :root {
+    --primary: #171717;
+    --primary-foreground: #ffffff;
+    --bg: #FFFFFF; 
+    --text: #171717;
+    --secondary: #F5F5F5; 
+    --muted: #737373;
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --border: #E5E5E5;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Manrope', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+[data-theme="dark"] {
+    --primary: #FFFFFF; 
+    --primary-foreground: #000000;
+    --bg: #000000; 
+    --text: #E5E5E5;
+    --secondary: #262626; 
+    --muted: #A3A3A3;
+    --card-bg: rgba(255, 255, 255, 0.05); 
+    --border: #404040;
+} */
 
 * {
     margin: 0;
@@ -66,6 +143,7 @@ ul {
 .btn {
     display: inline-flex;
     align-items: center;
+    text-align: center;
     gap: 0.5rem;
     padding: 0.75rem 2rem;
     border-radius: 9999px;
@@ -82,6 +160,8 @@ ul {
     background-color: var(--primary);
     color: var(--primary-foreground);
     border: none;
+    align-content: center;
+    text-align: center;
 }
 
 .btn-outline {
@@ -558,7 +638,7 @@ footer {
 }
 
 .highlight {
-    color: var(--primary);
+    color: var(--primary); 
     font-weight: bold;
 }
 /* ... Previous styles ... */
