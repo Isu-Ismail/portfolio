@@ -49,18 +49,22 @@ const renderHero = () => {
             </div>
             
             <div class="hero-image fade-in game-wrapper">
-                <div class="game-window">
-                    <div class="score-board">Score: <span id="scoreVal">0</span></div>
-                    <canvas id="runnerCanvas"></canvas>
-                    <div id="gameOverlay">
-                        <div class="overlay-content">
-                            <i data-lucide="play" style="width: 40px; height: 40px; margin-bottom: 10px;"></i>
-                            <p>Press SPACE to Run</p>
-                        </div>
-                    </div>
-                </div>
+    <div class="game-window">
+        <div class="score-board">
+            <span style="opacity:0.7">HI:</span> <span id="highScoreVal">0</span>
+            &nbsp;|&nbsp; 
+            Score: <span id="scoreVal">0</span>
+        </div>
+        
+        <canvas id="runnerCanvas"></canvas>
+        <div id="gameOverlay">
+            <div class="overlay-content">
+                <i data-lucide="play" style="width: 40px; height: 40px; margin-bottom: 10px;"></i>
+                <p>Press SPACE to Run</p>
             </div>
         </div>
+    </div>
+</div>
     `;
 };
 
@@ -69,22 +73,20 @@ const initDinoGame = () => {
     const canvas = document.getElementById('runnerCanvas');
     const overlay = document.getElementById('gameOverlay');
     const scoreEl = document.getElementById('scoreVal');
+    const highScoreEl = document.getElementById('highScoreVal'); // NEW ELEMENT
     
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-    
-    // Resolution (Matches your CSS 550px)
     canvas.width = 550;
     canvas.height = 550;
-
     const GROUND_Y = 350;
     
+    // GAME VARIABLES
     let gameRunning = false;
     let score = 0;
+    let highScore = 0; // NEW VARIABLE
     let animationId;
-    
-    // Initial Speed
     let baseSpeed = 5; 
     let gameSpeed = baseSpeed;
 
@@ -94,9 +96,8 @@ const initDinoGame = () => {
         width: 30,
         height: 30,
         dy: 0,
-        // TWEAKED FOR SMOOTHNESS
-        jumpPower: -9,   // Lower force (was -12)
-        gravity: 0.3,    // Lower gravity (was 0.6) for floatier jump
+        jumpPower: -9,
+        gravity: 0.3,
         grounded: false
     };
 
@@ -131,8 +132,8 @@ const initDinoGame = () => {
         // Road
         ctx.fillStyle = colors.text;
         ctx.fillRect(0, GROUND_Y, canvas.width, 4); 
-
-        // Ground Fill
+        
+        // Ground
         ctx.fillStyle = colors.muted; 
         ctx.globalAlpha = 0.2; 
         ctx.fillRect(0, GROUND_Y + 4, canvas.width, canvas.height - GROUND_Y);
@@ -157,16 +158,12 @@ const initDinoGame = () => {
         animationId = requestAnimationFrame(update);
         frame++;
 
-        // --- NEW SPEED LOGIC ---
-        // Speed increases by 0.1 for every point scored
-        // Cap the max speed at 15 so it doesn't become impossible
         gameSpeed = Math.min(10, baseSpeed + (score * 0.01));
 
         // Physics
         dino.dy += dino.gravity;
         dino.y += dino.dy;
 
-        // Ground Collision
         if (dino.y + dino.height > GROUND_Y) {
             dino.y = GROUND_Y - dino.height;
             dino.dy = 0;
@@ -175,14 +172,13 @@ const initDinoGame = () => {
             dino.grounded = false;
         }
 
-        // Spawning (Adjust rate based on speed so gaps don't get too wide)
-        // As speed goes up, we spawn slightly faster to keep difficulty consistent
+        // Spawning
         let spawnRate = Math.floor(100 - (gameSpeed * 2)); 
         if (frame % spawnRate === 0) {
             spawnObstacle();
         }
 
-        // Obstacles Movement & Collision
+        // Obstacles Loop
         for (let i = 0; i < obstacles.length; i++) {
             let obs = obstacles[i];
             obs.x -= gameSpeed;
@@ -197,7 +193,6 @@ const initDinoGame = () => {
                 gameOver();
             }
 
-            // Score update
             if (obs.x + obs.width < 0) {
                 obstacles.splice(i, 1);
                 score++;
@@ -219,7 +214,7 @@ const initDinoGame = () => {
         if (gameRunning) return;
         gameRunning = true;
         score = 0;
-        gameSpeed = baseSpeed; // Reset speed
+        gameSpeed = baseSpeed;
         scoreEl.textContent = 0;
         obstacles = [];
         dino.y = GROUND_Y - 30;
@@ -231,17 +226,24 @@ const initDinoGame = () => {
     function gameOver() {
         gameRunning = false;
         cancelAnimationFrame(animationId);
+        
+        // --- NEW HIGH SCORE LOGIC ---
+        if (score > highScore) {
+            highScore = score;
+            highScoreEl.textContent = highScore;
+        }
+
         overlay.style.display = 'flex';
         overlay.innerHTML = `
             <div class="overlay-content">
                 <h3 style="color:var(--primary); margin-bottom:10px;">System Crashed!</h3>
                 <p style="font-size:1.5rem; font-weight:bold;">Score: ${score}</p>
-                <p style="font-size:0.9rem; margin-top:10px; color:var(--muted)">Tap or Space to Reboot</p>
+                <p style="font-size:0.9rem; margin-top:5px; color:var(--text)">Best: ${highScore}</p>
+                <p style="font-size:0.8rem; margin-top:15px; color:var(--muted)">Tap or Space to Reboot</p>
             </div>
         `;
     }
 
-    // Input Listeners
     window.addEventListener('keydown', (e) => {
         if (e.code === 'Space') {
             e.preventDefault();
