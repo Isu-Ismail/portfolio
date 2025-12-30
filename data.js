@@ -1,7 +1,7 @@
 export const data = {
   name: "A.M. Ismail",
   role: "System Architect & Developer",
-  resume: "./assets/ismail_resume.pdf",
+  resume: "./assets/resume_ismail.pdf",
   // REPLACE THESE LINKS WITH YOUR ACTUAL IMAGE PATHS (e.g., './assets/me.jpg')
   images: {
     profile: "./assets/me.jpeg", 
@@ -12,7 +12,7 @@ export const data = {
     phone: "81248 14896",
     location: "Chennai, India",
     github: "https://github.com/Isu-Ismail",
-    linkedin: "https://www.linkedin.com/in/yourprofile" 
+    linkedin: "https://www.linkedin.com/in/ismail-am" 
   },
   about: "Production Engineering student focused on System Architecture and Rapid Prototyping. I specialize in designing distributed systems and utilize AI-augmented workflows to execute complex implementations efficiently. Tech-agnostic problem solver capable of deploying robust solutions across multiple environments.",
   education: [
