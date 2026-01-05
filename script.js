@@ -16,14 +16,10 @@ const updateResumeLinks = () => {
     });
 };
 
-// Render Functions
-// ... existing imports ...
-
-// 1. UPDATED RENDER HERO (Circular Layout)
 const renderHero = () => {
     const hero = document.getElementById('hero');
     
-    // 1. Get the Default Game (First one in list)
+    // 1. Get the Default Game
     let defaultGameName = "";
     let defaultGameUrl = "";
     
@@ -43,18 +39,71 @@ const renderHero = () => {
         });
     }
 
+    // 3. Render
     hero.innerHTML = `
-        <div class="container hero-grid">
+        <style>
+            .hero-split-layout {
+                display: grid;
+                /* CHANGED: 1fr for text, 0.85fr for game (makes game narrower) */
+                grid-template-columns: 1fr 0.85fr; 
+                gap: 4rem; /* Increased gap to separate them nicely */
+                align-items: center;
+                padding: 2rem 0;
+            }
+
+            @media (max-width: 900px) {
+                .hero-split-layout {
+                    grid-template-columns: 1fr;
+                    gap: 2rem;
+                }
+            }
+
+            .hero-game-card {
+                background: #0f0f0f;
+                border: 1px solid #333;
+                border-radius: 16px;
+                overflow: hidden;
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: column;
+                
+                /* CHANGED: Increased height from 480px to 600px */
+                min-height: 550px; 
+                height: 100%;
+                position: relative;
+            }
+
+            .game-card-header {
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.05);
+                border-bottom: 1px solid #333;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+
+            .game-frame {
+                width: 100%;
+                flex-grow: 1;
+                border: none;
+            }
+        </style>
+
+        <div class="container hero-split-layout">
+            
             <div class="hero-text fade-in-up">
-                <span style="color: var(--primary); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem;">
+                <span style="color: var(--primary); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem; display:block; margin-bottom: 1rem;">
                     ${data.role}
                 </span>
-                <h1>
+                <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem;">
                     Hello, I'm <br />
                     <span style="color: var(--primary)">${data.name.split(" ")[1]}</span>.
                 </h1>
-                <p>${data.about.substring(0, 100)}...</p>
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <p style="font-size: 1.125rem; margin-bottom: 2rem; opacity: 0.8; max-width: 500px;">
+                    ${data.about.substring(0, 100)}...
+                </p>
+                
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem;">
                     <a href="#projects" class="btn btn-primary">
                         View Projects <i data-lucide="arrow-right"></i>
                     </a>
@@ -62,20 +111,21 @@ const renderHero = () => {
                         Resume <i data-lucide="download"></i>
                     </a>
                 </div>
-                <div style="display: flex; gap: 1.5rem; margin-top: 2rem;">
+
+                <div style="display: flex; gap: 1.5rem;">
                     ${data.contact.github ? `<a href="${data.contact.github}" target="_blank"><i data-lucide="github"></i></a>` : ''}
                     ${data.contact.linkedin ? `<a href="${data.contact.linkedin}" target="_blank"><i data-lucide="linkedin"></i></a>` : ''}
                     <a href="mailto:${data.contact.email}"><i data-lucide="mail"></i></a>
                 </div>
             </div>
             
-            <div class="hero-image fade-in game-wrapper">
-                
-                <div class="game-selector">
-                    <i data-lucide="gamepad-2" style="width:14px;"></i>
-                    <select id="gameDropdown">
+            <div class="hero-game-card fade-in">
+                <div class="game-card-header">
+                    <i data-lucide="gamepad-2" style="width:16px; color: var(--primary);"></i>
+                    <select id="gameDropdown" style="background: transparent; color: white; border: none; outline: none; cursor: pointer; font-family: var(--font-mono); width: 100%; font-size: 0.9rem;">
                         ${optionsHTML}
                     </select>
+                    <i data-lucide="chevron-down" style="width:14px; color: #666;"></i>
                 </div>
 
                 <iframe src="${defaultGameUrl}" id="gameFrame" class="game-frame" title="Interactive Game Module"></iframe>
@@ -83,20 +133,16 @@ const renderHero = () => {
         </div>
     `;
 
-    // 3. Add Event Listener for Switching Games
+    // 4. Listeners
     setTimeout(() => {
         const dropdown = document.getElementById('gameDropdown');
         const iframe = document.getElementById('gameFrame');
-        
         if(dropdown && iframe) {
             dropdown.addEventListener('change', (e) => {
                 iframe.src = e.target.value;
-                // Optional: Refocus the iframe so keyboard controls work immediately
                 iframe.focus();
             });
         }
-        
-        // Re-init icons for the new gamepad icon
         if(window.lucide) window.lucide.createIcons();
     }, 0);
 };

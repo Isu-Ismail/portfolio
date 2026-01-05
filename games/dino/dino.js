@@ -19,7 +19,7 @@ let gameSpeed = 5;
 
 // Constants
 // Lowered Ground Y to fit better in a circle
-const GROUND_Y = 300; 
+const GROUND_Y = canvas.height / 1.7;
 const GRAVITY = 0.3;
 const JUMP_POWER = -9;
 
