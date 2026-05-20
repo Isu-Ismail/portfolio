@@ -3,12 +3,12 @@ export const data = {
   role: "System Architect & Developer",
   resume: "./assets/resume_ismail-8.pdf",
   gamePath: [
-      { "Dino": "./games/dino/dino.html" },
-      { "Pacman": "./games/pacman/pacman.html" },
-      { "Tetris": "./games/tetris/tetris.html" }
-    ],
+    { "Dino": "./games/dino/dino.html" },
+    { "Pacman": "./games/pacman/pacman.html" },
+    { "Tetris": "./games/tetris/tetris.html" }
+  ],
   images: {
-    profile: "./assets/me.jpeg", 
+    profile: "./assets/me.jpeg",
     hero: "./assets/hero.jpeg"
   },
   contact: {
@@ -16,7 +16,7 @@ export const data = {
     phone: "81248 14896",
     location: "Chennai, India",
     github: "https://github.com/Isu-Ismail",
-    linkedin: "https://www.linkedin.com/in/ismail-am" 
+    linkedin: "https://www.linkedin.com/in/ismail-am"
   },
   about: "Production Engineering student focused on the software behind automation. I sit right between hardware and software. My engineering background gives me a solid grasp of how machines work, but my main focus is on designing the software systems that run them. I map out the overall logic, figure out how data should flow, and design how things connect. I use AI to handle the actual coding syntax, which lets me focus 100% on building reliable, smart automation systems without getting slowed down by the typing.",
   education: [
@@ -37,7 +37,7 @@ export const data = {
     {
       role: "Chassis Design & Maintenance",
       company: "MITONAUR Motorsports (Go-Kart Team)",
-      period: "Dec 2024 - Present",
+      period: "Dec 2024 - 2025",
       description: "Structured structural simulations and engineering parameters on racing frames designed for the TNKC and KEC championships."
     }
   ],
@@ -48,17 +48,17 @@ export const data = {
   certificates: [
     {
       title: "RUSA 2.0 AI in Smart BMS",
-      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80", 
+      image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
       desc: "Hands-on training on AI applications in Smart Battery Management Systems."
     },
     {
       title: "Arduino Bootcamp",
-      image: "https://images.unsplash.com/photo-1553406830-ef2513450d76?auto=format&fit=crop&w=800&q=80", 
+      image: "https://images.unsplash.com/photo-1553406830-ef2513450d76?auto=format&fit=crop&w=800&q=80",
       desc: "Comprehensive bootcamp on microcontroller programming and hardware interaction."
     },
     {
       title: "Python for Data Science",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80", 
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
       desc: "Foundational course on Python libraries including Pandas and NumPy by IBM."
     }
   ],
