@@ -243,23 +243,47 @@ const renderEducation = () => {
 
 const renderProjects = () => {
     const projects = document.getElementById('projects');
-    const items = data.projects.map(project => `
-        <div class="project-card">
+    const items = data.projects.map(project => {
+        const targetLink = project.detailsLink || project.link || '#';
+        const isExternal = !project.detailsLink;
+        const targetAttr = isExternal && targetLink !== '#' ? 'target="_blank"' : '';
+        const relAttr = isExternal && targetLink !== '#' ? 'rel="noopener noreferrer"' : '';
+        
+        // Generate Star Rating HTML
+        const starsCount = project.stars || 0;
+        let starsHTML = '';
+        if (starsCount > 0) {
+            starsHTML = `<div class="project-rating">`;
+            for (let i = 1; i <= 5; i++) {
+                if (i <= starsCount) {
+                    starsHTML += `<i data-lucide="star" class="star-icon star-filled"></i>`;
+                } else {
+                    starsHTML += `<i data-lucide="star" class="star-icon star-empty"></i>`;
+                }
+            }
+            starsHTML += `</div>`;
+        }
+        
+        return `
+        <a href="${targetLink}" ${targetAttr} ${relAttr} class="project-card" style="text-decoration: none; color: inherit;">
             <div>
                 <div class="project-header">
                     <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-                        <h3 style="font-size: 1.25rem; margin: 0;">${project.title}</h3>
+                        <h3 style="font-size: 1.25rem; margin: 0; color: var(--text);">${project.title}</h3>
                         ${project.status ? `<span class="status-badge status-${project.status.toLowerCase()}">${project.status}</span>` : ''}
+                        ${project.duration ? `<span style="font-size: 0.75rem; color: var(--muted); background: rgba(100, 116, 139, 0.1); padding: 0.2rem 0.5rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.3rem;"><i data-lucide="calendar" width="12" height="12"></i> ${project.duration}</span>` : ''}
                     </div>
-                    ${project.link !== '#' ? `<a href="${project.link}" target="_blank" style="color: var(--muted);"><i data-lucide="arrow-up-right"></i></a>` : ''}
+                    ${targetLink !== '#' ? `<span style="color: var(--muted);"><i data-lucide="arrow-up-right"></i></span>` : ''}
                 </div>
+                ${starsHTML}
                 <p style="color: var(--muted); font-size: 0.9rem;">${project.description}</p>
             </div>
             <div class="project-tags">
                 ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
             </div>
-        </div>
-    `).join('');
+        </a>
+        `;
+    }).join('');
 
     projects.innerHTML = `
         <div class="container">
@@ -328,38 +352,83 @@ const initCarousel = () => {
     
     if(!track || slides.length === 0) return;
 
-    let currentIndex = 0;
     const totalSlides = slides.length;
+    
+    if (totalSlides <= 1) {
+        // Only one slide, no scrolling or clones needed
+        track.style.transform = 'translateX(0%)';
+        if (dots[0]) dots[0].classList.add('active');
+        return;
+    }
+
+    // Clone slides for infinite loop
+    const firstClone = slides[0].cloneNode(true);
+    const lastClone = slides[totalSlides - 1].cloneNode(true);
+
+    track.appendChild(firstClone);
+    track.insertBefore(lastClone, slides[0]);
+
+    // Set initial position to first original slide
+    let currentIndex = 1;
+    track.style.transition = 'none';
+    track.style.transform = `translateX(-100%)`;
+
+    let isTransitioning = false;
 
     // Function to update slide
-    const updateSlide = (index) => {
+    const updateSlide = (index, transition = true) => {
+        if (transition) {
+            track.style.transition = 'transform 0.5s ease-in-out';
+            isTransitioning = true;
+        } else {
+            track.style.transition = 'none';
+            track.offsetHeight; // Force reflow to flush transition: none before transform change
+        }
         track.style.transform = `translateX(-${index * 100}%)`;
         
-        // Update dots
+        // Update dots (0-based index mapped to active index)
+        let activeDotIndex = index - 1;
+        if (index === 0) {
+            activeDotIndex = totalSlides - 1;
+        } else if (index === totalSlides + 1) {
+            activeDotIndex = 0;
+        }
+        
         dots.forEach(dot => dot.classList.remove('active'));
-        if(dots[index]) dots[index].classList.add('active');
+        if (dots[activeDotIndex]) dots[activeDotIndex].classList.add('active');
         
         currentIndex = index;
     };
 
+    // Listen for transition end to instantly snap without animation
+    track.addEventListener('transitionend', () => {
+        isTransitioning = false;
+        if (currentIndex === 0) {
+            updateSlide(totalSlides, false);
+        } else if (currentIndex === totalSlides + 1) {
+            updateSlide(1, false);
+        }
+    });
+
     // Auto Slide Loop
     const startAutoSlide = () => {
         return setInterval(() => {
-            let nextIndex = (currentIndex + 1) % totalSlides;
-            updateSlide(nextIndex);
+            if (isTransitioning) return;
+            updateSlide(currentIndex + 1);
         }, 4000); // Change image every 4 seconds
     };
 
-    // Initialize first state
-    updateSlide(0);
+    // Initialize first state active dot
+    if (dots[0]) dots[0].classList.add('active');
     let slideInterval = startAutoSlide();
 
     // Add Click Listeners to Dots (Manual Navigation)
     dots.forEach(dot => {
         dot.addEventListener('click', (e) => {
+            if (isTransitioning) return;
             const index = parseInt(e.target.dataset.index);
             clearInterval(slideInterval); // Stop auto slide on interaction
-            updateSlide(index);
+            updateSlide(index + 1);
             slideInterval = startAutoSlide(); // Restart auto slide
         });
     });
@@ -557,7 +626,8 @@ const initTerminal = () => {
             case 'projects':
                 data.projects.forEach(p => {
                     const statusStr = p.status ? ` <span style="color: #10b981; font-weight: bold;">(${p.status})</span>` : '';
-                    response += `<div style="margin-bottom: 5px;"><span class="highlight">${p.title}</span>${statusStr} <span style="font-size: 0.8em; color: #666;">[${p.tags.join(', ')}]</span></div><div style="color: #ccc; margin-bottom: 10px;">${p.description}</div>`;
+                    const starsStr = p.stars ? ` <span style="color: #EAB308;">${'★'.repeat(p.stars)}${'☆'.repeat(5 - p.stars)}</span>` : '';
+                    response += `<div style="margin-bottom: 5px;"><span class="highlight">${p.title}</span>${statusStr}${starsStr} <span style="font-size: 0.8em; color: #666;">[${p.tags.join(', ')}]</span></div><div style="color: #ccc; margin-bottom: 10px;">${p.description}</div>`;
                 });
                 break;
             case 'certificates':
@@ -598,9 +668,9 @@ const initTerminal = () => {
 document.addEventListener('DOMContentLoaded', () => {
     renderHero();
     renderAbout();
-    renderExperience();
-    renderEducation();
     renderProjects();
+    renderEducation();
+    renderExperience();
     renderCertificates();
     renderSkills();
     renderContact();

@@ -944,3 +944,34 @@ canvas#runnerCanvas {
     color: #fbbf24;
     border-color: rgba(245, 158, 11, 0.3);
 }
+
+/* Project Ratings */
+.project-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    margin-bottom: 0.75rem;
+}
+
+.star-icon {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s ease, fill 0.2s ease, stroke 0.2s ease;
+}
+
+.star-filled {
+    stroke: #EAB308;
+    fill: #EAB308;
+}
+
+.star-empty {
+    stroke: var(--muted);
+    fill: transparent;
+    opacity: 0.3;
+}
+
+/* Hover effect to scale the stars */
+.project-card:hover .star-icon {
+    transform: scale(1.15);
+}
+

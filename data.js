@@ -24,7 +24,7 @@ export const data = {
       degree: "B.E. Production Engineering",
       institution: "Madras Institute of Technology",
       period: "Aug 2023 - 2027",
-      description: "CGPA: 7.73/10. Currently in III Year."
+      description: "CGPA: 7.73/10. Currently in IV Year."
     },
     {
       degree: "Higher Secondary (HSC)",
@@ -66,59 +66,84 @@ export const data = {
 
     {
       title: "Sri Energy Industrial Automation",
-      description: "Deployed a local-first IoT overhead crane telemetry control system featuring real-time hardware orchestration. Containerized a React dashboard and FastAPI middleware connected to a secure self-hosted Pocketbase backend using NGINX. Achieved low-latency safety controls by driving multiple ESP32 microcontrollers via a local Mosquitto MQTT broker.",
+      description: "A local-first IoT crane telemetry and real-time control system. Features containerized React/FastAPI services connected to a self-hosted Pocketbase backend and ESP32 nodes via MQTT.",
       tags: ["ESP32", "MQTT", "FastAPI", "Pocketbase", "React", "NGINX", "Docker", "XAMPP"],
       link: "https://srienergy.com/",
-      status: "Completed"
+      detailsLink: "./project_details/sriautoamtion.html",
+      status: "Completed",
+      duration: "Oct 2024 – May 2026",
+      stars: 5
     },
     {
-      title: "Ct Ski (ML-Cloud Computing)",
-      description: "Architected a high-availability server cluster delivering high-performance cloud environments to CS students. Configured distributed storage and full infrastructure metric monitoring using Prometheus and Grafana stacks. Programmed a slot-based booking platform powered by FastAPI automation; launched and inaugurated by the CEO of Tekion.",
+      title: "CTSKII (ML-Cloud Computing)",
+      description: "A high-availability server cluster offering GPU cloud environments to students. Built with Docker Swarm, GlusterFS, and a slot-based FastAPI booking platform.",
       tags: ["Docker Swarm", "GlusterFS", "JupyterHub", "FastAPI", "Prometheus", "Grafana", "NFS"],
       link: "https://ct.mitindia.edu/ctskii/",
-      status: "Completed"
+      detailsLink: "./project_details/ctskii.html",
+      status: "Completed",
+      duration: "Oct 2025 – Marhch 2026",
+      stars: 5
     },
     {
-      title: "Virtual Lab for Metrology",
-      description: "Designed a comprehensive web simulator handling physical Profile Projector operations and fundamental experiments. Consolidated 12 decoupled web microservices into a production ecosystem using NGINX file-based reverse proxy routing.",
-      tags: ["React", "Docker", "NGINX", "Simulation"],
-      link: "https://pt.mitindia.edu/virtuallab/",
-      status: "Completed"
+      title: "CWM (Command Watch Manager)",
+      description: "A complete workspace and shell history manager for developers. Catalog projects, quick-jump to editors, search history banks, switch GitHub accounts, and copy token-condensed codebase contexts.",
+      tags: ["Python", "CLI", "Click", "Rich", "AI Integration", "Workspace Manager", "Developer Tools"],
+      link: "https://isu-ismail.github.io/cwm-docwebsite/index.html",
+      detailsLink: "./project_details/cwm.html",
+      status: "Completed",
+      duration: "Nov 2025 – Dec 2025",
+      stars: 4
     },
+
     {
       title: "Seven5: Attendance Tracking App",
-      description: "Built an offline-first tracking mobile application syncing seamlessly with cloud dashboards via Google Drive API wrappers. Engineered dynamic predictive algorithms allowing users to run simulation strategies on personal leave and attendance metrics.",
+      description: "An offline-first Flutter application utilizing Google Drive API sync and predictive leave/attendance simulation algorithms.",
       tags: ["Flutter", "Hive", "Dart", "Google Drive API", "Cloud Run"],
       link: "https://github.com/Isu-Ismail/ATTENDER_APP",
-      status: "Completed"
+      detailsLink: "./project_details/seven5.html",
+      status: "Completed",
+      duration: "Dec 2025 – May 2026",
+      stars: 4
     },
     {
-      title: "EggShell: Visual File Stitching Engine",
-      description: "Engineered a visual data pipeline editor that maps, filters, and stitches multi-format datasets into target outputs. Built a declarative JSON-driven pipeline architecture enabling multi-file transformations via a single config block. Integrated an inline SQLite custom script utility to parse string modifications and complex data-cleaning logic.",
-      tags: ["React", "JavaScript", "SQLite", "Data Pipeline"],
+      title: "EggShell: Visual Relational Data Pipeline Builder",
+      description: "A local-first, visual database pipeline workspace to stitch and clean spreadsheet data using an in-browser SQLite Web Worker and React Flow canvas.",
+      tags: ["React", "SQLite", "React Flow", "Web Worker", "OPFS", "Data Pipeline", "Client-Side Privacy"],
       link: "https://isu-ismail.github.io/eggshell/",
-      status: "Completed"
+      detailsLink: "./project_details/eggshell.html",
+      status: "Completed",
+      duration: "May 2026",
+      stars: 3
     },
+
     {
-      title: "CWM (CLI Workspace Manager)",
-      description: "Engineered an automated command-line developer environment utility handling workspace state session mapping and task logs.",
-      tags: ["Python", "CLI", "Click", "Rich"],
-      link: "https://isu-ismail.github.io/cwm-docwebsite/index.html",
-      status: "Completed"
+      title: "Virtual Lab for Metrology",
+      description: "A web simulator for physical Profile Projector metrology experiments. Combines 12 decoupled microservices routed via NGINX reverse proxy.",
+      tags: ["React", "Docker", "NGINX", "Simulation"],
+      link: "https://pt.mitindia.edu/virtuallab/",
+      detailsLink: "./project_details/virtuallab.html",
+      status: "Completed",
+      duration: "Sep 2025 – Apr 2026",
+      stars: 3
     },
     {
       title: "BillGenie",
-      description: "A containerized, high-performance web application designed for community organizations and trusts to streamline donor registry management, financial ledger entries (with fast Single & Batch modes), and automated receipt printing. Features a performance-optimized local state caching engine, annual ledgers with advanced filtering, and a print engine for compiling bulk A4 PDF documents.",
+      description: "A containerized donor registry and ledger system for community organizations. Features single/batch entry modes, local caching, and bulk PDF invoicing.",
       tags: ["React", "FastAPI", "PocketBase", "Docker", "Pydantic", "Excel Import"],
       link: "https://github.com/Isu-Ismail/BillGenie/",
-      status: "Completed"
+      detailsLink: "./project_details/billgenie.html",
+      status: "Completed",
+      duration: "May 2026",
+      stars: 3
     },
     {
       title: "Anna University App",
-      description: "Contributed to frontend implementation and UI asset scaling on the official enterprise e-Governance mobile workspace.",
+      description: "Mobile application frontend contributions for the official e-Governance workspace at Anna University.",
       tags: ["Flutter", "Dart", "Hive", "Mobile"],
       link: "https://play.google.com/store/apps/details?id=com.cegov.AUeGov",
-      status: "Completed"
+      status: "Completed",
+      duration: "Aug 2025 – Nov 2025",
+      stars: 3
     }
   ]
 };
